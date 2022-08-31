@@ -1,0 +1,60 @@
+
+1)
+ API direkt módon van megadva. - API legyen environment variable-ben tárolva. 
+Bejelentkezett felhasználó neve (vagy email címe) legyen lekérve, saját API kulcsához legyen kapcsolva. 
+Felhasználó saját API kulcsa kerüljön meghívásra.
+
+2)
+ Csak text column módosul - 
+Az updateCell(e) function-ben, egy for loop-al vesszük sorra és módosítjuk a különböző 
+oszlopok alá eső cellákat. Minden cellára ugyan azt a data structure-t futtatjuk le,
+holott minden különböző column type-nál a saját data structure-jére van szükségünk.
+
+2.1) column type: Long text column
+https://monday.com/developers/v2#column-values-section-longtext
+Code example
+JSON.stringify({
+  "text": sample_text_variable
+});
+
+2.2) column type: Status column
+
+2.3) (column type: Date column) vagy sima text, vagy a Creation log column legyen 
+lekérve mondayból és ez alapján rögzítve a spreadsheetben (az Item ID column-hoz hasonlóan).
+
+3) 
+ spredsheet nem frissül -
+Jelenleg csak egy oszlop (Item ID) frissül a spredsheet-ben, a monday-ben történt változásra.
+Minden oszlop frissüljön!
+
+4)
+ People column type
+Bejelentő oszlop legyen People típusú, és kerüljön kitöltésre automatikusan a bejelentkezett 
+felhasználó alapján. (Spredsheet-ben és monday-ben is frissüljön)
+
+5)
+ Struktúra (Board vagy Group)
+Jelenleg csak Board-ot kezel a kód, Group-okat nem.
+2 megoldás van:
+A) monday-ben úgy alakítjuk ki a hibajelentés struktúráját, 
+hogy minden projekt hibajelentése egy külön board.
+(pl.: Tesztelés workspace, Bug report mappa, Origo-app board)
+B) A kódban kezeljük a Groupokat.
+(A két megoldás egymást nem zárja ki)
+
+6)
+ egy trigger-re, 1 sor módosul
+Ha pl. a Hiba ID oszlopot lehúzom a spredsheetben automatikus kitöltés miatt, 
+akkor monday-ben csak egy (az első) sor kerül módosításra.
+
+7)
+ Azonos Hiba ID
+Fel lehet venni ugyan azt a Hiba ID-t 2x
+
+8)
+ monday Státusz automatizmus
+A monday boardon beállított automatizmus, 
+ami a Státusz oszlopot New értékre állítja új sor létrehozásakor,
+akkor működik, ha "column_type": "Text" küldöm be az adatot,
+és nem működik, ha "column_type": "LongTextColumn".
+A hibát valószínűleg megoldja a D0003 javítása (de azt követően meg kell figyelni).
